@@ -1,0 +1,38 @@
+# Go binaries and executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go test and benchmark results
+*.test
+*.prof
+
+# Compiled object files, static libraries, and build outputs
+*.o
+*.a
+*.out
+
+# Go development files
+/_test/
+/.vscode/
+/.idea/
+/misc/
+/bin/
+/tmp/
+
+# Go module dependencies (replace with your package manager if not using Go modules)
+/go.sum
+/go.sum.incomplete
+/vendor/
+/Godeps/
+
+# IDE-specific files and directories (replace with your preferred IDE)
+/.idea/
+/.vscode/
+
+# Miscellaneous
+*.log
+*.DS_Store
+Thumbs.db
