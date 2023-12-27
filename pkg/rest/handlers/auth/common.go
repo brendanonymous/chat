@@ -69,3 +69,13 @@ func hashPassword(password string) (string, error) {
 	}
 	return string(hashedPassword), nil
 }
+
+// checkPasswordAgainstHash checks the plain text password against a password hash
+func checkPasswordAgainstHash(password, password_hash string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(password_hash), []byte(password))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
