@@ -15,7 +15,8 @@ func (handler AuthHandler) Login(c *gin.Context) {
 
 	// Perform user authentication logic (check credentials, generate JWT, etc.)
 
-	// TODO: get user by id
+	// TODO: get user from DB by id
+
 	// dummy vv
 	id := 1234
 

@@ -2,6 +2,7 @@ package auth_handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -21,15 +22,28 @@ func authMiddleware() gin.HandlerFunc {
 			return secretKey, nil
 		})
 
-		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token parsing error"})
+			c.Abort()
+			return
+		}
+
+		if !token.Valid {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
 			c.Abort()
 			return
 		}
 
 		claims, ok := token.Claims.(*Claims)
 		if !ok {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Claims extraction error"})
+			c.Abort()
+			return
+		}
+
+		// Check if the token has expired
+		if claims.ExpiresAt < time.Now().Unix() {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token has expired"})
 			c.Abort()
 			return
 		}

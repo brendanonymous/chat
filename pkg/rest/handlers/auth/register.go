@@ -28,7 +28,7 @@ func (handler AuthHandler) Register(c *gin.Context) {
 		PasswordHash: password_hash,
 	}
 
-	// Store registered user in database
+	// TODO: Store registered user in database
 
 	c.Status(http.StatusCreated)
 }

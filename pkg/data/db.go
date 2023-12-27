@@ -18,6 +18,7 @@ type DBClientInterface interface {
 	GetChatroomById(int32) (*models.Chatroom, error)
 	GetChatroomByMessageId(int32) (*models.Chatroom, error)
 	GetAllChatroomsByUserId(int32) ([]*models.Chatroom, error)
+	GetAllChatrooms() ([]*models.Chatroom, error)
 
 	// users
 	AddNewUser(models.User) error

@@ -17,7 +17,7 @@ func main() {
 	// Endpoint for user login
 	r.POST("/login", AuthHandler.Login)
 
-	// Protected endpoint EXAMPLE DO NOT DELETE
+	// TODO: Protected endpoint EXAMPLE DO NOT DELETE
 	// r.GET("/protected", authMiddleware(), func(c *gin.Context) {
 	// 	// Access the user information from the context
 	// 	user := c.MustGet("user").(User)
