@@ -2,43 +2,51 @@ package data
 
 import (
 	"chat/pkg/rest/models"
+	"context"
+	"database/sql"
 
-	"github.com/go-pg/pg"
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/dialect/pgdialect"
+	pg "github.com/uptrace/bun/driver/pgdriver"
 )
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . DBClientInterface
 type DBClientInterface interface {
-	// messages
-	AddNewMessage(*models.Message) error
-	GetMessageById(int32) (*models.Message, error)
-	GetAllMessagesByChatroomId(int32) ([]*models.Message, error)
-	DeleteMessage(int32) error
+	// // messages
+	// AddNewMessage(context.Context, *models.Message) error
+	// GetMessageById(context.Context, int32) (*models.Message, error)
+	// GetAllMessagesByChatroomId(context.Context, int32) ([]*models.Message, error)
+	// DeleteMessage(context.Context, int32) error
 
-	// chatrooms
-	GetChatroomById(int32) (*models.Chatroom, error)
-	GetChatroomByMessageId(int32) (*models.Chatroom, error)
-	GetAllChatroomsByUserId(int32) ([]*models.Chatroom, error)
-	GetAllChatrooms() ([]*models.Chatroom, error)
+	// // chatrooms
+	// GetChatroomById(context.Context, int32) (*models.Chatroom, error)
+	// GetChatroomByMessageId(context.Context, int32) (*models.Chatroom, error)
+	// GetAllChatroomsByUserId(context.Context, int32) ([]*models.Chatroom, error)
+	// GetAllChatrooms(context.Context) ([]*models.Chatroom, error)
 
-	// users
-	AddNewUser(models.User) error
-	UpdateUser(models.User) error
-	GetUserByUsername(string) (*models.User, error)
-	GetUserByEmail(string) (*models.User, error)
-	DeleteUserById(int32) error
+	// // users
+	// AddNewUser(context.Context, models.User) error
+	// UpdateUser(context.Context, models.User) error
+	GetUserByUsername(context.Context, string) (*models.User, error)
+	// GetUserByEmail(context.Context, string) (*models.User, error)
+	// DeleteUserById(context.Context, int32) error
 }
 
 type DBClient struct {
-	DB *pg.DB
+	DB *bun.DB
 }
 
 func NewDbClient() *DBClient {
+	dsn := "postgres://postgres:@localhost:5432/test?sslmode=disable"
+	// dsn := "unix://user:pass@dbname/var/run/postgresql/.s.PGSQL.5432"
+
+	sqlDb := sql.OpenDB(
+		pg.NewConnector(
+			pg.WithDSN(dsn),
+			pg.WithUser("brendanlauck"),
+			pg.WithDatabase("chat_dev")))
+
 	return &DBClient{
-		DB: pg.Connect(
-			&pg.Options{
-				Addr:     ":5432",
-				User:     "brendanlauck",
-				Database: "chat_test",
-			}),
+		DB: bun.NewDB(sqlDb, pgdialect.New()),
 	}
 }
