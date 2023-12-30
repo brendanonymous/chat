@@ -38,6 +38,7 @@ func SetupRouter() *gin.Engine {
 	authRoutes := router.Group("/auth")
 	{
 		authRoutes.POST("/login", authHandlers.Login)
+		authRoutes.POST("/register", authHandlers.Register)
 	}
 
 	// TODO:
@@ -46,7 +47,7 @@ func SetupRouter() *gin.Engine {
 	// }
 
 	// TODO:
-	// chatroomRoutes := router.Group("/message")
+	// chatroomRoutes := router.Group("/chatroom")
 	// {
 	// }
 

@@ -25,7 +25,7 @@ type DBClientInterface interface {
 	// GetAllChatrooms(context.Context) ([]*models.Chatroom, error)
 
 	// // users
-	// AddNewUser(context.Context, models.User) error
+	AddNewUser(context.Context, *models.User) error
 	// UpdateUser(context.Context, models.User) error
 	GetUserByUsername(context.Context, string) (*models.User, error)
 	// GetUserByEmail(context.Context, string) (*models.User, error)

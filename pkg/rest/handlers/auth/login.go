@@ -7,7 +7,6 @@ import (
 )
 
 func (handler AuthHandler) Login(c *gin.Context) {
-	// Extract the context from the Gin context
 	ctx := c.Request.Context()
 
 	var user_login UserLogin
