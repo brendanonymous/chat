@@ -35,6 +35,7 @@ func (suite *AuthHandlersTestSuite) SetupTest() {
 
 	// TODO: add other handlers here before writing their unit tests
 	suite.router.POST("/auth/register", suite.authHandler.Register)
+	suite.router.POST("/auth/login", suite.authHandler.Login)
 }
 
 func TestAuthHandlersTestSuite(t *testing.T) {

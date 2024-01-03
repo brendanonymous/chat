@@ -5,11 +5,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-
-	"github.com/stretchr/testify/assert"
 )
 
-func (suite *AuthHandlersTestSuite) TestAuthHandler_GoodRegistration_Succeeds() {
+func (suite *AuthHandlersTestSuite) TestAuthHandler_GoodRegistrationRequest_Succeeds() {
 	// Prepare a sample registration request
 	payload := map[string]interface{}{
 		"username": "testuser",
@@ -20,7 +18,7 @@ func (suite *AuthHandlersTestSuite) TestAuthHandler_GoodRegistration_Succeeds() 
 
 	// Create a request with the sample payload
 	req, err := http.NewRequest("POST", "/auth/register", bytes.NewBuffer(jsonPayload))
-	assert.NoError(suite.T(), err)
+	suite.NoError(err)
 
 	// Set the request header to indicate JSON content
 	req.Header.Set("Content-Type", "application/json")
@@ -32,10 +30,10 @@ func (suite *AuthHandlersTestSuite) TestAuthHandler_GoodRegistration_Succeeds() 
 	suite.router.ServeHTTP(res, req)
 
 	// Assert call count of db client function
-	assert.Equal(suite.T(), fakeDbClient.AddNewUserCallCount(), 1)
+	suite.Equal(fakeDbClient.AddNewUserCallCount(), 1)
 
 	// Assert the response status code
-	assert.Equal(suite.T(), http.StatusCreated, res.Code)
+	suite.Equal(http.StatusCreated, res.Code)
 }
 
 func (suite *AuthHandlersTestSuite) TestAuthHandler_MissingRegistrationField_Fails() {
@@ -66,7 +64,7 @@ func (suite *AuthHandlersTestSuite) TestAuthHandler_MissingRegistrationField_Fai
 			jsonPayload, _ := json.Marshal(payload)
 
 			req, err := http.NewRequest("POST", "/auth/register", bytes.NewBuffer(jsonPayload))
-			assert.NoError(suite.T(), err)
+			suite.NoError(err)
 
 			req.Header.Set("Content-Type", "application/json")
 
@@ -74,9 +72,9 @@ func (suite *AuthHandlersTestSuite) TestAuthHandler_MissingRegistrationField_Fai
 
 			suite.router.ServeHTTP(res, req)
 
-			assert.Equal(suite.T(), fakeDbClient.AddNewUserCallCount(), 0)
+			suite.Equal(fakeDbClient.AddNewUserCallCount(), 0)
 
-			assert.Equal(suite.T(), http.StatusBadRequest, res.Code)
+			suite.Equal(http.StatusBadRequest, res.Code)
 		})
 	}
 }
