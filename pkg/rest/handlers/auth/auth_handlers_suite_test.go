@@ -10,6 +10,10 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var (
+	fakeDbClient *datafakes.FakeDBClientInterface
+)
+
 type AuthHandlersTestSuite struct {
 	suite.Suite
 	router      *gin.Engine
@@ -21,7 +25,7 @@ func (suite *AuthHandlersTestSuite) SetupTest() {
 
 	suite.router = gin.New()
 
-	fakeDbClient := &datafakes.FakeDBClientInterface{}
+	fakeDbClient = &datafakes.FakeDBClientInterface{}
 
 	config := &config.ServerConfig{
 		DBClient: fakeDbClient,
@@ -29,9 +33,10 @@ func (suite *AuthHandlersTestSuite) SetupTest() {
 
 	suite.authHandler = auth_handlers.NewAuthHandler(config)
 
+	// TODO: add other handlers here before writing their unit tests
 	suite.router.POST("/auth/register", suite.authHandler.Register)
 }
 
-func TestBoatHandlersTestSuite(t *testing.T) {
+func TestAuthHandlersTestSuite(t *testing.T) {
 	suite.Run(t, new(AuthHandlersTestSuite))
 }
