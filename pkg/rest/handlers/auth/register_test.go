@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 )
 
-func (suite *AuthHandlersTestSuite) TestAuthHandler_GoodRegistrationRequest_Succeeds() {
+func (suite *AuthHandlersTestSuite) TestRegisterHandler_GoodRequest_Succeeds() {
 	// Prepare a sample registration request
 	payload := map[string]interface{}{
 		"username": "testuser",
@@ -36,7 +36,7 @@ func (suite *AuthHandlersTestSuite) TestAuthHandler_GoodRegistrationRequest_Succ
 	suite.Equal(http.StatusCreated, res.Code)
 }
 
-func (suite *AuthHandlersTestSuite) TestAuthHandler_MissingRegistrationField_Fails() {
+func (suite *AuthHandlersTestSuite) TestRegisterHandler_MissingField_Fails() {
 	testNames := []string{
 		"Subtest_MissingUsername",
 		"Subtest_MissingEmail",
