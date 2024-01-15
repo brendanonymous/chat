@@ -12,19 +12,19 @@ import (
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . DBClientInterface
 type DBClientInterface interface {
-	// // messages
+	// messages
 	// AddNewMessage(context.Context, *models.Message) error
 	// GetMessageById(context.Context, int32) (*models.Message, error)
-	// GetAllMessagesByChatroomId(context.Context, int32) ([]*models.Message, error)
+	// GetMessagesByChatroomId(context.Context, int32) ([]*models.Message, error)
 	// DeleteMessage(context.Context, int32) error
 
-	// // chatrooms
+	// chatrooms
 	// GetChatroomById(context.Context, int32) (*models.Chatroom, error)
 	// GetChatroomByMessageId(context.Context, int32) (*models.Chatroom, error)
-	// GetAllChatroomsByUserId(context.Context, int32) ([]*models.Chatroom, error)
-	// GetAllChatrooms(context.Context) ([]*models.Chatroom, error)
+	GetChatroomsByUserId(context.Context, int32) ([]*models.UserChatroom, error)
+	// GetChatrooms(context.Context) ([]*models.Chatroom, error)
 
-	// // users
+	// users
 	AddNewUser(context.Context, *models.User) error
 	// UpdateUser(context.Context, models.User) error
 	GetUserByUsername(context.Context, string) (*models.User, error)

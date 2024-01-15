@@ -33,7 +33,6 @@ func (suite *AuthHandlersTestSuite) SetupTest() {
 
 	suite.authHandler = auth_handlers.NewAuthHandler(config)
 
-	// TODO: add other handlers here before writing their unit tests
 	suite.router.POST("/auth/register", suite.authHandler.Register)
 	suite.router.POST("/auth/login", suite.authHandler.Login)
 }

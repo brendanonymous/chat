@@ -6,6 +6,7 @@ import (
 	"chat/pkg/config"
 	"chat/pkg/data"
 	auth_handlers "chat/pkg/rest/handlers/auth"
+	chatroom_handlers "chat/pkg/rest/handlers/chatroom"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,7 @@ func SetupRouter() *gin.Engine {
 	}
 
 	authHandlers := auth_handlers.NewAuthHandler(serverConfig)
+	chatroomHandlers := chatroom_handlers.NewChatroomHandler(serverConfig)
 
 	router := gin.Default()
 
@@ -42,14 +44,16 @@ func SetupRouter() *gin.Engine {
 	}
 
 	// TODO:
-	// messageRoutes := router.Group("/message")
+	// messageRoutes := router.Group("/messages")
 	// {
 	// }
 
 	// TODO:
-	// chatroomRoutes := router.Group("/chatroom")
-	// {
-	// }
+	chatroomRoutes := router.Group("/chatrooms")
+	{
+		chatroomRoutes.GET("/:id", chatroomHandlers.ListByUserId)
+		// chatroomRoutes.GET("/join/:id", chatroomHandlers.GetByID)
+	}
 
 	return router
 }
