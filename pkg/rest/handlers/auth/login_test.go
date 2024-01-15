@@ -36,7 +36,7 @@ func (suite *AuthHandlersTestSuite) TestLoginHandler_GoodRequest_Succeeds() {
 	suite.Equal(http.StatusOK, res.Code)
 }
 
-func (suite *AuthHandlersTestSuite) TestLoginHandler_MissingField_Fails() {
+func (suite *AuthHandlersTestSuite) TestLoginHandler_BadRequest_MissingField_Fails() {
 	testNames := []string{
 		"Subtest_MissingUsername",
 		"Subtest_MissingPassword",

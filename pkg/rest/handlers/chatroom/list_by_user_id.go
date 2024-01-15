@@ -26,7 +26,7 @@ func (handler ChatroomHandler) ListByUserId(c *gin.Context) {
 		return
 	}
 
-	if chatrooms == nil {
+	if len(chatrooms) == 0 {
 		err := fmt.Errorf("no chatrooms found for user ID %d", user_id)
 		log.Printf("Not found: %s", err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"Not found": err.Error()})
