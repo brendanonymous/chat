@@ -2,7 +2,7 @@ generate:
 	@go generate ./...
 
 build:
-	@go build -o bin/boat-auction ./cmd
+	@go build -o bin/chat ./cmd
 
 run: build
 	go run ./cmd/main.go

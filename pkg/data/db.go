@@ -19,10 +19,13 @@ type DBClientInterface interface {
 	// DeleteMessage(context.Context, int32) error
 
 	// chatrooms
-	// GetChatroomById(context.Context, int32) (*models.Chatroom, error)
+	GetChatroomById(context.Context, int32) (*models.Chatroom, error)
 	// GetChatroomByMessageId(context.Context, int32) (*models.Chatroom, error)
-	GetChatroomsByUserId(context.Context, int32) ([]*models.UserChatroom, error)
 	// GetChatrooms(context.Context) ([]*models.Chatroom, error)
+
+	// user chatrooms
+	GetUserChatroomsByUserId(context.Context, int32) ([]*models.UserChatroom, error)
+	// GetUserChatroomsByChatroomId(context.Context, int32) ([]*models.UserChatroom, error)
 
 	// users
 	AddNewUser(context.Context, *models.User) error

@@ -1,4 +1,4 @@
-package chatroom_handlers
+package user_chatroom_handlers
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (handler ChatroomHandler) ListByUserId(c *gin.Context) {
+func (handler UserChatroomHandler) ListByUserId(c *gin.Context) {
 	ctx := c.Request.Context()
 
 	user_id, err := strconv.ParseInt(c.Param("id"), 10, 32)
@@ -19,7 +19,7 @@ func (handler ChatroomHandler) ListByUserId(c *gin.Context) {
 		return
 	}
 
-	chatrooms, err := handler.DBClient.GetChatroomsByUserId(ctx, int32(user_id))
+	chatrooms, err := handler.DBClient.GetUserChatroomsByUserId(ctx, int32(user_id))
 	if err != nil {
 		log.Printf("Server error: %s", err.Error())
 		c.JSON(http.StatusInternalServerError, err.Error())
@@ -27,7 +27,7 @@ func (handler ChatroomHandler) ListByUserId(c *gin.Context) {
 	}
 
 	if len(chatrooms) == 0 {
-		err := fmt.Errorf("no chatrooms found for user ID %d", user_id)
+		err := fmt.Errorf("no user chatrooms found for user ID %d", user_id)
 		log.Printf("Not found: %s", err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"Not found": err.Error()})
 		return
