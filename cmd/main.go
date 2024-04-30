@@ -60,7 +60,7 @@ func SetupRouter() *gin.Engine {
 	userChatroomRoutes := router.Group("/user_chatrooms")
 	{
 		userChatroomRoutes.GET("user/:id", userChatroomHandlers.ListByUserId)
-		// userChatroomRoutes.GET("chatroom/:id", userChatroomHandlers.ListByChatroomId)
+		userChatroomRoutes.GET("chatroom/:id", userChatroomHandlers.ListByChatroomId)
 
 	}
 

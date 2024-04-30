@@ -35,7 +35,7 @@ func (suite *UserChatroomHandlersTestSuite) SetupTest() {
 
 	// TODO: add new routes here for UT's
 	suite.router.GET("/user_chatrooms/user/:id", suite.userChatroomHandler.ListByUserId)
-	// suite.router.GET("/user_chatrooms/chatroom/:id", suite.userChatroomHandler.ListByChatroomId)
+	suite.router.GET("/user_chatrooms/chatroom/:id", suite.userChatroomHandler.ListByChatroomId)
 }
 
 func TestUserChatroomHandlersTestSuite(t *testing.T) {

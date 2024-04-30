@@ -25,7 +25,7 @@ type DBClientInterface interface {
 
 	// user chatrooms
 	GetUserChatroomsByUserId(context.Context, int32) ([]*models.UserChatroom, error)
-	// GetUserChatroomsByChatroomId(context.Context, int32) ([]*models.UserChatroom, error)
+	GetUserChatroomsByChatroomId(context.Context, int32) ([]*models.UserChatroom, error)
 
 	// users
 	AddNewUser(context.Context, *models.User) error

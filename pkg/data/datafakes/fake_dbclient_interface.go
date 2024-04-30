@@ -49,6 +49,20 @@ type FakeDBClientInterface struct {
 		result1 *models.User
 		result2 error
 	}
+	GetUserChatroomsByChatroomIdStub        func(context.Context, int32) ([]*models.UserChatroom, error)
+	getUserChatroomsByChatroomIdMutex       sync.RWMutex
+	getUserChatroomsByChatroomIdArgsForCall []struct {
+		arg1 context.Context
+		arg2 int32
+	}
+	getUserChatroomsByChatroomIdReturns struct {
+		result1 []*models.UserChatroom
+		result2 error
+	}
+	getUserChatroomsByChatroomIdReturnsOnCall map[int]struct {
+		result1 []*models.UserChatroom
+		result2 error
+	}
 	GetUserChatroomsByUserIdStub        func(context.Context, int32) ([]*models.UserChatroom, error)
 	getUserChatroomsByUserIdMutex       sync.RWMutex
 	getUserChatroomsByUserIdArgsForCall []struct {
@@ -259,6 +273,71 @@ func (fake *FakeDBClientInterface) GetUserByUsernameReturnsOnCall(i int, result1
 	}{result1, result2}
 }
 
+func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomId(arg1 context.Context, arg2 int32) ([]*models.UserChatroom, error) {
+	fake.getUserChatroomsByChatroomIdMutex.Lock()
+	ret, specificReturn := fake.getUserChatroomsByChatroomIdReturnsOnCall[len(fake.getUserChatroomsByChatroomIdArgsForCall)]
+	fake.getUserChatroomsByChatroomIdArgsForCall = append(fake.getUserChatroomsByChatroomIdArgsForCall, struct {
+		arg1 context.Context
+		arg2 int32
+	}{arg1, arg2})
+	stub := fake.GetUserChatroomsByChatroomIdStub
+	fakeReturns := fake.getUserChatroomsByChatroomIdReturns
+	fake.recordInvocation("GetUserChatroomsByChatroomId", []interface{}{arg1, arg2})
+	fake.getUserChatroomsByChatroomIdMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdCallCount() int {
+	fake.getUserChatroomsByChatroomIdMutex.RLock()
+	defer fake.getUserChatroomsByChatroomIdMutex.RUnlock()
+	return len(fake.getUserChatroomsByChatroomIdArgsForCall)
+}
+
+func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdCalls(stub func(context.Context, int32) ([]*models.UserChatroom, error)) {
+	fake.getUserChatroomsByChatroomIdMutex.Lock()
+	defer fake.getUserChatroomsByChatroomIdMutex.Unlock()
+	fake.GetUserChatroomsByChatroomIdStub = stub
+}
+
+func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdArgsForCall(i int) (context.Context, int32) {
+	fake.getUserChatroomsByChatroomIdMutex.RLock()
+	defer fake.getUserChatroomsByChatroomIdMutex.RUnlock()
+	argsForCall := fake.getUserChatroomsByChatroomIdArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdReturns(result1 []*models.UserChatroom, result2 error) {
+	fake.getUserChatroomsByChatroomIdMutex.Lock()
+	defer fake.getUserChatroomsByChatroomIdMutex.Unlock()
+	fake.GetUserChatroomsByChatroomIdStub = nil
+	fake.getUserChatroomsByChatroomIdReturns = struct {
+		result1 []*models.UserChatroom
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdReturnsOnCall(i int, result1 []*models.UserChatroom, result2 error) {
+	fake.getUserChatroomsByChatroomIdMutex.Lock()
+	defer fake.getUserChatroomsByChatroomIdMutex.Unlock()
+	fake.GetUserChatroomsByChatroomIdStub = nil
+	if fake.getUserChatroomsByChatroomIdReturnsOnCall == nil {
+		fake.getUserChatroomsByChatroomIdReturnsOnCall = make(map[int]struct {
+			result1 []*models.UserChatroom
+			result2 error
+		})
+	}
+	fake.getUserChatroomsByChatroomIdReturnsOnCall[i] = struct {
+		result1 []*models.UserChatroom
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeDBClientInterface) GetUserChatroomsByUserId(arg1 context.Context, arg2 int32) ([]*models.UserChatroom, error) {
 	fake.getUserChatroomsByUserIdMutex.Lock()
 	ret, specificReturn := fake.getUserChatroomsByUserIdReturnsOnCall[len(fake.getUserChatroomsByUserIdArgsForCall)]
@@ -333,6 +412,8 @@ func (fake *FakeDBClientInterface) Invocations() map[string][][]interface{} {
 	defer fake.getChatroomByIdMutex.RUnlock()
 	fake.getUserByUsernameMutex.RLock()
 	defer fake.getUserByUsernameMutex.RUnlock()
+	fake.getUserChatroomsByChatroomIdMutex.RLock()
+	defer fake.getUserChatroomsByChatroomIdMutex.RUnlock()
 	fake.getUserChatroomsByUserIdMutex.RLock()
 	defer fake.getUserChatroomsByUserIdMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
