@@ -20,6 +20,7 @@ type DBClientInterface interface {
 
 	// chatrooms
 	GetChatroomById(context.Context, int32) (*models.Chatroom, error)
+	GetChatroomByName(context.Context, string) (*models.Chatroom, error)
 	// GetChatroomByMessageId(context.Context, int32) (*models.Chatroom, error)
 	// GetChatrooms(context.Context) ([]*models.Chatroom, error)
 

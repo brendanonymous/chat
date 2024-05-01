@@ -34,6 +34,7 @@ func (suite *ChatroomHandlersTestSuite) SetupTest() {
 	suite.chatroomHandler = chatroom_handlers.NewChatroomHandler(config)
 
 	suite.router.GET("/chatrooms/:id", suite.chatroomHandler.GetByID)
+	suite.router.GET("/chatrooms/name/:name", suite.chatroomHandler.GetByName)
 }
 
 func TestChatroomHandlersTestSuite(t *testing.T) {
