@@ -1,6 +1,7 @@
 package chatroom_handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -11,7 +12,12 @@ import (
 func (handler ChatroomHandler) GetByName(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	parsed_name := strings.ReplaceAll(c.Param("name"), "+", " ")
+	parsed_name := strings.Trim(strings.ReplaceAll(c.Param("name"), "+", " "), " ")
+	if parsed_name == "" || parsed_name == " " || parsed_name[0] == '+' {
+		log.Printf("invalid chatroom name: %s", parsed_name)
+		c.JSON(http.StatusBadRequest, fmt.Errorf("invalid chatroom name"))
+		return
+	}
 
 	chatroom, err := handler.DBClient.GetChatroomByName(ctx, parsed_name)
 	if err != nil {
