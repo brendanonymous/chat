@@ -9,6 +9,18 @@ import (
 )
 
 type FakeDBClientInterface struct {
+	AddChatroomStub        func(context.Context, *models.Chatroom) error
+	addChatroomMutex       sync.RWMutex
+	addChatroomArgsForCall []struct {
+		arg1 context.Context
+		arg2 *models.Chatroom
+	}
+	addChatroomReturns struct {
+		result1 error
+	}
+	addChatroomReturnsOnCall map[int]struct {
+		result1 error
+	}
 	AddNewUserStub        func(context.Context, *models.User) error
 	addNewUserMutex       sync.RWMutex
 	addNewUserArgsForCall []struct {
@@ -19,6 +31,18 @@ type FakeDBClientInterface struct {
 		result1 error
 	}
 	addNewUserReturnsOnCall map[int]struct {
+		result1 error
+	}
+	AddUserChatroomStub        func(context.Context, *models.UserChatroom) error
+	addUserChatroomMutex       sync.RWMutex
+	addUserChatroomArgsForCall []struct {
+		arg1 context.Context
+		arg2 *models.UserChatroom
+	}
+	addUserChatroomReturns struct {
+		result1 error
+	}
+	addUserChatroomReturnsOnCall map[int]struct {
 		result1 error
 	}
 	GetChatroomByIdStub        func(context.Context, int32) (*models.Chatroom, error)
@@ -63,36 +87,98 @@ type FakeDBClientInterface struct {
 		result1 *models.User
 		result2 error
 	}
-	GetUserChatroomsByChatroomIdStub        func(context.Context, int32) ([]*models.UserChatroom, error)
-	getUserChatroomsByChatroomIdMutex       sync.RWMutex
-	getUserChatroomsByChatroomIdArgsForCall []struct {
+	ListUserChatroomsByChatroomIdStub        func(context.Context, int32) ([]*models.UserChatroom, error)
+	listUserChatroomsByChatroomIdMutex       sync.RWMutex
+	listUserChatroomsByChatroomIdArgsForCall []struct {
 		arg1 context.Context
 		arg2 int32
 	}
-	getUserChatroomsByChatroomIdReturns struct {
+	listUserChatroomsByChatroomIdReturns struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}
-	getUserChatroomsByChatroomIdReturnsOnCall map[int]struct {
+	listUserChatroomsByChatroomIdReturnsOnCall map[int]struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}
-	GetUserChatroomsByUserIdStub        func(context.Context, int32) ([]*models.UserChatroom, error)
-	getUserChatroomsByUserIdMutex       sync.RWMutex
-	getUserChatroomsByUserIdArgsForCall []struct {
+	ListUserChatroomsByUserIdStub        func(context.Context, int32) ([]*models.UserChatroom, error)
+	listUserChatroomsByUserIdMutex       sync.RWMutex
+	listUserChatroomsByUserIdArgsForCall []struct {
 		arg1 context.Context
 		arg2 int32
 	}
-	getUserChatroomsByUserIdReturns struct {
+	listUserChatroomsByUserIdReturns struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}
-	getUserChatroomsByUserIdReturnsOnCall map[int]struct {
+	listUserChatroomsByUserIdReturnsOnCall map[int]struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeDBClientInterface) AddChatroom(arg1 context.Context, arg2 *models.Chatroom) error {
+	fake.addChatroomMutex.Lock()
+	ret, specificReturn := fake.addChatroomReturnsOnCall[len(fake.addChatroomArgsForCall)]
+	fake.addChatroomArgsForCall = append(fake.addChatroomArgsForCall, struct {
+		arg1 context.Context
+		arg2 *models.Chatroom
+	}{arg1, arg2})
+	stub := fake.AddChatroomStub
+	fakeReturns := fake.addChatroomReturns
+	fake.recordInvocation("AddChatroom", []interface{}{arg1, arg2})
+	fake.addChatroomMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeDBClientInterface) AddChatroomCallCount() int {
+	fake.addChatroomMutex.RLock()
+	defer fake.addChatroomMutex.RUnlock()
+	return len(fake.addChatroomArgsForCall)
+}
+
+func (fake *FakeDBClientInterface) AddChatroomCalls(stub func(context.Context, *models.Chatroom) error) {
+	fake.addChatroomMutex.Lock()
+	defer fake.addChatroomMutex.Unlock()
+	fake.AddChatroomStub = stub
+}
+
+func (fake *FakeDBClientInterface) AddChatroomArgsForCall(i int) (context.Context, *models.Chatroom) {
+	fake.addChatroomMutex.RLock()
+	defer fake.addChatroomMutex.RUnlock()
+	argsForCall := fake.addChatroomArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeDBClientInterface) AddChatroomReturns(result1 error) {
+	fake.addChatroomMutex.Lock()
+	defer fake.addChatroomMutex.Unlock()
+	fake.AddChatroomStub = nil
+	fake.addChatroomReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeDBClientInterface) AddChatroomReturnsOnCall(i int, result1 error) {
+	fake.addChatroomMutex.Lock()
+	defer fake.addChatroomMutex.Unlock()
+	fake.AddChatroomStub = nil
+	if fake.addChatroomReturnsOnCall == nil {
+		fake.addChatroomReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.addChatroomReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeDBClientInterface) AddNewUser(arg1 context.Context, arg2 *models.User) error {
@@ -153,6 +239,68 @@ func (fake *FakeDBClientInterface) AddNewUserReturnsOnCall(i int, result1 error)
 		})
 	}
 	fake.addNewUserReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeDBClientInterface) AddUserChatroom(arg1 context.Context, arg2 *models.UserChatroom) error {
+	fake.addUserChatroomMutex.Lock()
+	ret, specificReturn := fake.addUserChatroomReturnsOnCall[len(fake.addUserChatroomArgsForCall)]
+	fake.addUserChatroomArgsForCall = append(fake.addUserChatroomArgsForCall, struct {
+		arg1 context.Context
+		arg2 *models.UserChatroom
+	}{arg1, arg2})
+	stub := fake.AddUserChatroomStub
+	fakeReturns := fake.addUserChatroomReturns
+	fake.recordInvocation("AddUserChatroom", []interface{}{arg1, arg2})
+	fake.addUserChatroomMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeDBClientInterface) AddUserChatroomCallCount() int {
+	fake.addUserChatroomMutex.RLock()
+	defer fake.addUserChatroomMutex.RUnlock()
+	return len(fake.addUserChatroomArgsForCall)
+}
+
+func (fake *FakeDBClientInterface) AddUserChatroomCalls(stub func(context.Context, *models.UserChatroom) error) {
+	fake.addUserChatroomMutex.Lock()
+	defer fake.addUserChatroomMutex.Unlock()
+	fake.AddUserChatroomStub = stub
+}
+
+func (fake *FakeDBClientInterface) AddUserChatroomArgsForCall(i int) (context.Context, *models.UserChatroom) {
+	fake.addUserChatroomMutex.RLock()
+	defer fake.addUserChatroomMutex.RUnlock()
+	argsForCall := fake.addUserChatroomArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeDBClientInterface) AddUserChatroomReturns(result1 error) {
+	fake.addUserChatroomMutex.Lock()
+	defer fake.addUserChatroomMutex.Unlock()
+	fake.AddUserChatroomStub = nil
+	fake.addUserChatroomReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeDBClientInterface) AddUserChatroomReturnsOnCall(i int, result1 error) {
+	fake.addUserChatroomMutex.Lock()
+	defer fake.addUserChatroomMutex.Unlock()
+	fake.AddUserChatroomStub = nil
+	if fake.addUserChatroomReturnsOnCall == nil {
+		fake.addUserChatroomReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.addUserChatroomReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
 }
@@ -352,17 +500,17 @@ func (fake *FakeDBClientInterface) GetUserByUsernameReturnsOnCall(i int, result1
 	}{result1, result2}
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomId(arg1 context.Context, arg2 int32) ([]*models.UserChatroom, error) {
-	fake.getUserChatroomsByChatroomIdMutex.Lock()
-	ret, specificReturn := fake.getUserChatroomsByChatroomIdReturnsOnCall[len(fake.getUserChatroomsByChatroomIdArgsForCall)]
-	fake.getUserChatroomsByChatroomIdArgsForCall = append(fake.getUserChatroomsByChatroomIdArgsForCall, struct {
+func (fake *FakeDBClientInterface) ListUserChatroomsByChatroomId(arg1 context.Context, arg2 int32) ([]*models.UserChatroom, error) {
+	fake.listUserChatroomsByChatroomIdMutex.Lock()
+	ret, specificReturn := fake.listUserChatroomsByChatroomIdReturnsOnCall[len(fake.listUserChatroomsByChatroomIdArgsForCall)]
+	fake.listUserChatroomsByChatroomIdArgsForCall = append(fake.listUserChatroomsByChatroomIdArgsForCall, struct {
 		arg1 context.Context
 		arg2 int32
 	}{arg1, arg2})
-	stub := fake.GetUserChatroomsByChatroomIdStub
-	fakeReturns := fake.getUserChatroomsByChatroomIdReturns
-	fake.recordInvocation("GetUserChatroomsByChatroomId", []interface{}{arg1, arg2})
-	fake.getUserChatroomsByChatroomIdMutex.Unlock()
+	stub := fake.ListUserChatroomsByChatroomIdStub
+	fakeReturns := fake.listUserChatroomsByChatroomIdReturns
+	fake.recordInvocation("ListUserChatroomsByChatroomId", []interface{}{arg1, arg2})
+	fake.listUserChatroomsByChatroomIdMutex.Unlock()
 	if stub != nil {
 		return stub(arg1, arg2)
 	}
@@ -372,62 +520,62 @@ func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomId(arg1 context.Con
 	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdCallCount() int {
-	fake.getUserChatroomsByChatroomIdMutex.RLock()
-	defer fake.getUserChatroomsByChatroomIdMutex.RUnlock()
-	return len(fake.getUserChatroomsByChatroomIdArgsForCall)
+func (fake *FakeDBClientInterface) ListUserChatroomsByChatroomIdCallCount() int {
+	fake.listUserChatroomsByChatroomIdMutex.RLock()
+	defer fake.listUserChatroomsByChatroomIdMutex.RUnlock()
+	return len(fake.listUserChatroomsByChatroomIdArgsForCall)
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdCalls(stub func(context.Context, int32) ([]*models.UserChatroom, error)) {
-	fake.getUserChatroomsByChatroomIdMutex.Lock()
-	defer fake.getUserChatroomsByChatroomIdMutex.Unlock()
-	fake.GetUserChatroomsByChatroomIdStub = stub
+func (fake *FakeDBClientInterface) ListUserChatroomsByChatroomIdCalls(stub func(context.Context, int32) ([]*models.UserChatroom, error)) {
+	fake.listUserChatroomsByChatroomIdMutex.Lock()
+	defer fake.listUserChatroomsByChatroomIdMutex.Unlock()
+	fake.ListUserChatroomsByChatroomIdStub = stub
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdArgsForCall(i int) (context.Context, int32) {
-	fake.getUserChatroomsByChatroomIdMutex.RLock()
-	defer fake.getUserChatroomsByChatroomIdMutex.RUnlock()
-	argsForCall := fake.getUserChatroomsByChatroomIdArgsForCall[i]
+func (fake *FakeDBClientInterface) ListUserChatroomsByChatroomIdArgsForCall(i int) (context.Context, int32) {
+	fake.listUserChatroomsByChatroomIdMutex.RLock()
+	defer fake.listUserChatroomsByChatroomIdMutex.RUnlock()
+	argsForCall := fake.listUserChatroomsByChatroomIdArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdReturns(result1 []*models.UserChatroom, result2 error) {
-	fake.getUserChatroomsByChatroomIdMutex.Lock()
-	defer fake.getUserChatroomsByChatroomIdMutex.Unlock()
-	fake.GetUserChatroomsByChatroomIdStub = nil
-	fake.getUserChatroomsByChatroomIdReturns = struct {
+func (fake *FakeDBClientInterface) ListUserChatroomsByChatroomIdReturns(result1 []*models.UserChatroom, result2 error) {
+	fake.listUserChatroomsByChatroomIdMutex.Lock()
+	defer fake.listUserChatroomsByChatroomIdMutex.Unlock()
+	fake.ListUserChatroomsByChatroomIdStub = nil
+	fake.listUserChatroomsByChatroomIdReturns = struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByChatroomIdReturnsOnCall(i int, result1 []*models.UserChatroom, result2 error) {
-	fake.getUserChatroomsByChatroomIdMutex.Lock()
-	defer fake.getUserChatroomsByChatroomIdMutex.Unlock()
-	fake.GetUserChatroomsByChatroomIdStub = nil
-	if fake.getUserChatroomsByChatroomIdReturnsOnCall == nil {
-		fake.getUserChatroomsByChatroomIdReturnsOnCall = make(map[int]struct {
+func (fake *FakeDBClientInterface) ListUserChatroomsByChatroomIdReturnsOnCall(i int, result1 []*models.UserChatroom, result2 error) {
+	fake.listUserChatroomsByChatroomIdMutex.Lock()
+	defer fake.listUserChatroomsByChatroomIdMutex.Unlock()
+	fake.ListUserChatroomsByChatroomIdStub = nil
+	if fake.listUserChatroomsByChatroomIdReturnsOnCall == nil {
+		fake.listUserChatroomsByChatroomIdReturnsOnCall = make(map[int]struct {
 			result1 []*models.UserChatroom
 			result2 error
 		})
 	}
-	fake.getUserChatroomsByChatroomIdReturnsOnCall[i] = struct {
+	fake.listUserChatroomsByChatroomIdReturnsOnCall[i] = struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByUserId(arg1 context.Context, arg2 int32) ([]*models.UserChatroom, error) {
-	fake.getUserChatroomsByUserIdMutex.Lock()
-	ret, specificReturn := fake.getUserChatroomsByUserIdReturnsOnCall[len(fake.getUserChatroomsByUserIdArgsForCall)]
-	fake.getUserChatroomsByUserIdArgsForCall = append(fake.getUserChatroomsByUserIdArgsForCall, struct {
+func (fake *FakeDBClientInterface) ListUserChatroomsByUserId(arg1 context.Context, arg2 int32) ([]*models.UserChatroom, error) {
+	fake.listUserChatroomsByUserIdMutex.Lock()
+	ret, specificReturn := fake.listUserChatroomsByUserIdReturnsOnCall[len(fake.listUserChatroomsByUserIdArgsForCall)]
+	fake.listUserChatroomsByUserIdArgsForCall = append(fake.listUserChatroomsByUserIdArgsForCall, struct {
 		arg1 context.Context
 		arg2 int32
 	}{arg1, arg2})
-	stub := fake.GetUserChatroomsByUserIdStub
-	fakeReturns := fake.getUserChatroomsByUserIdReturns
-	fake.recordInvocation("GetUserChatroomsByUserId", []interface{}{arg1, arg2})
-	fake.getUserChatroomsByUserIdMutex.Unlock()
+	stub := fake.ListUserChatroomsByUserIdStub
+	fakeReturns := fake.listUserChatroomsByUserIdReturns
+	fake.recordInvocation("ListUserChatroomsByUserId", []interface{}{arg1, arg2})
+	fake.listUserChatroomsByUserIdMutex.Unlock()
 	if stub != nil {
 		return stub(arg1, arg2)
 	}
@@ -437,46 +585,46 @@ func (fake *FakeDBClientInterface) GetUserChatroomsByUserId(arg1 context.Context
 	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByUserIdCallCount() int {
-	fake.getUserChatroomsByUserIdMutex.RLock()
-	defer fake.getUserChatroomsByUserIdMutex.RUnlock()
-	return len(fake.getUserChatroomsByUserIdArgsForCall)
+func (fake *FakeDBClientInterface) ListUserChatroomsByUserIdCallCount() int {
+	fake.listUserChatroomsByUserIdMutex.RLock()
+	defer fake.listUserChatroomsByUserIdMutex.RUnlock()
+	return len(fake.listUserChatroomsByUserIdArgsForCall)
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByUserIdCalls(stub func(context.Context, int32) ([]*models.UserChatroom, error)) {
-	fake.getUserChatroomsByUserIdMutex.Lock()
-	defer fake.getUserChatroomsByUserIdMutex.Unlock()
-	fake.GetUserChatroomsByUserIdStub = stub
+func (fake *FakeDBClientInterface) ListUserChatroomsByUserIdCalls(stub func(context.Context, int32) ([]*models.UserChatroom, error)) {
+	fake.listUserChatroomsByUserIdMutex.Lock()
+	defer fake.listUserChatroomsByUserIdMutex.Unlock()
+	fake.ListUserChatroomsByUserIdStub = stub
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByUserIdArgsForCall(i int) (context.Context, int32) {
-	fake.getUserChatroomsByUserIdMutex.RLock()
-	defer fake.getUserChatroomsByUserIdMutex.RUnlock()
-	argsForCall := fake.getUserChatroomsByUserIdArgsForCall[i]
+func (fake *FakeDBClientInterface) ListUserChatroomsByUserIdArgsForCall(i int) (context.Context, int32) {
+	fake.listUserChatroomsByUserIdMutex.RLock()
+	defer fake.listUserChatroomsByUserIdMutex.RUnlock()
+	argsForCall := fake.listUserChatroomsByUserIdArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByUserIdReturns(result1 []*models.UserChatroom, result2 error) {
-	fake.getUserChatroomsByUserIdMutex.Lock()
-	defer fake.getUserChatroomsByUserIdMutex.Unlock()
-	fake.GetUserChatroomsByUserIdStub = nil
-	fake.getUserChatroomsByUserIdReturns = struct {
+func (fake *FakeDBClientInterface) ListUserChatroomsByUserIdReturns(result1 []*models.UserChatroom, result2 error) {
+	fake.listUserChatroomsByUserIdMutex.Lock()
+	defer fake.listUserChatroomsByUserIdMutex.Unlock()
+	fake.ListUserChatroomsByUserIdStub = nil
+	fake.listUserChatroomsByUserIdReturns = struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeDBClientInterface) GetUserChatroomsByUserIdReturnsOnCall(i int, result1 []*models.UserChatroom, result2 error) {
-	fake.getUserChatroomsByUserIdMutex.Lock()
-	defer fake.getUserChatroomsByUserIdMutex.Unlock()
-	fake.GetUserChatroomsByUserIdStub = nil
-	if fake.getUserChatroomsByUserIdReturnsOnCall == nil {
-		fake.getUserChatroomsByUserIdReturnsOnCall = make(map[int]struct {
+func (fake *FakeDBClientInterface) ListUserChatroomsByUserIdReturnsOnCall(i int, result1 []*models.UserChatroom, result2 error) {
+	fake.listUserChatroomsByUserIdMutex.Lock()
+	defer fake.listUserChatroomsByUserIdMutex.Unlock()
+	fake.ListUserChatroomsByUserIdStub = nil
+	if fake.listUserChatroomsByUserIdReturnsOnCall == nil {
+		fake.listUserChatroomsByUserIdReturnsOnCall = make(map[int]struct {
 			result1 []*models.UserChatroom
 			result2 error
 		})
 	}
-	fake.getUserChatroomsByUserIdReturnsOnCall[i] = struct {
+	fake.listUserChatroomsByUserIdReturnsOnCall[i] = struct {
 		result1 []*models.UserChatroom
 		result2 error
 	}{result1, result2}
@@ -485,18 +633,22 @@ func (fake *FakeDBClientInterface) GetUserChatroomsByUserIdReturnsOnCall(i int, 
 func (fake *FakeDBClientInterface) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.addChatroomMutex.RLock()
+	defer fake.addChatroomMutex.RUnlock()
 	fake.addNewUserMutex.RLock()
 	defer fake.addNewUserMutex.RUnlock()
+	fake.addUserChatroomMutex.RLock()
+	defer fake.addUserChatroomMutex.RUnlock()
 	fake.getChatroomByIdMutex.RLock()
 	defer fake.getChatroomByIdMutex.RUnlock()
 	fake.getChatroomByNameMutex.RLock()
 	defer fake.getChatroomByNameMutex.RUnlock()
 	fake.getUserByUsernameMutex.RLock()
 	defer fake.getUserByUsernameMutex.RUnlock()
-	fake.getUserChatroomsByChatroomIdMutex.RLock()
-	defer fake.getUserChatroomsByChatroomIdMutex.RUnlock()
-	fake.getUserChatroomsByUserIdMutex.RLock()
-	defer fake.getUserChatroomsByUserIdMutex.RUnlock()
+	fake.listUserChatroomsByChatroomIdMutex.RLock()
+	defer fake.listUserChatroomsByChatroomIdMutex.RUnlock()
+	fake.listUserChatroomsByUserIdMutex.RLock()
+	defer fake.listUserChatroomsByUserIdMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

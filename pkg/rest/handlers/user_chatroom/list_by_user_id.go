@@ -19,7 +19,7 @@ func (handler UserChatroomHandler) ListByUserId(c *gin.Context) {
 		return
 	}
 
-	chatrooms, err := handler.DBClient.GetUserChatroomsByUserId(ctx, int32(user_id))
+	chatrooms, err := handler.DBClient.ListUserChatroomsByUserId(ctx, int32(user_id))
 	if err != nil {
 		log.Printf("Server error: %s", err.Error())
 		c.JSON(http.StatusInternalServerError, err.Error())

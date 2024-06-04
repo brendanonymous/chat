@@ -24,16 +24,16 @@ func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_GoodRequ
 			ChatroomID: 2,
 		},
 	}
-	fakeDbClient.GetUserChatroomsByChatroomIdReturns(testUserChatrooms, nil)
+	fakeDbClient.ListUserChatroomsByChatroomIdReturns(testUserChatrooms, nil)
 
 	suite.router.ServeHTTP(res, req)
 
-	suite.Equal(1, fakeDbClient.GetUserChatroomsByChatroomIdCallCount())
+	suite.Equal(1, fakeDbClient.ListUserChatroomsByChatroomIdCallCount())
 
 	suite.Equal(http.StatusOK, res.Code)
 }
 
-func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_GoodRequest_ChatroomNotFound() {
+func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_GoodRequest_NotFound() {
 	req, err := http.NewRequest(http.MethodGet, "/user_chatrooms/chatroom/12", nil)
 	suite.NoError(err)
 
@@ -43,16 +43,16 @@ func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_GoodRequ
 
 	testUserChatrooms := []*models.UserChatroom{}
 
-	fakeDbClient.GetUserChatroomsByChatroomIdReturns(testUserChatrooms, nil)
+	fakeDbClient.ListUserChatroomsByChatroomIdReturns(testUserChatrooms, nil)
 
 	suite.router.ServeHTTP(res, req)
 
-	suite.Equal(1, fakeDbClient.GetUserChatroomsByChatroomIdCallCount())
+	suite.Equal(1, fakeDbClient.ListUserChatroomsByChatroomIdCallCount())
 
 	suite.Equal(http.StatusNotFound, res.Code)
 }
 
-func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_BadRequest_BadPathParameter_Fails() {
+func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_BadRequest_BadPathParameter() {
 	req, err := http.NewRequest(http.MethodGet, "/user_chatrooms/chatroom/one", nil)
 	suite.NoError(err)
 
@@ -62,7 +62,7 @@ func (suite *UserChatroomHandlersTestSuite) TestListByChatroomIdHandler_BadReque
 
 	suite.router.ServeHTTP(res, req)
 
-	suite.Equal(0, fakeDbClient.GetUserChatroomsByChatroomIdCallCount(), 0)
+	suite.Equal(0, fakeDbClient.ListUserChatroomsByChatroomIdCallCount(), 0)
 
 	suite.Equal(http.StatusBadRequest, res.Code)
 }

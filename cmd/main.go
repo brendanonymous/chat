@@ -55,6 +55,7 @@ func SetupRouter() *gin.Engine {
 	{
 		chatroomRoutes.GET("/:id", chatroomHandlers.GetByID)
 		chatroomRoutes.GET("/name/:name", chatroomHandlers.GetByName)
+		chatroomRoutes.POST("", chatroomHandlers.PostChatroom)
 	}
 
 	// TODO:
