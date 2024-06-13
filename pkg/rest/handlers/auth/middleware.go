@@ -1,6 +1,7 @@
 package auth_handlers
 
 import (
+	"chat/pkg/auth"
 	"net/http"
 	"time"
 
@@ -18,8 +19,8 @@ func authMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-			return secretKey, nil
+		token, err := jwt.ParseWithClaims(tokenString, &auth.Claims{}, func(token *jwt.Token) (interface{}, error) {
+			return auth.SecretKey, nil
 		})
 
 		if err != nil {
@@ -34,7 +35,7 @@ func authMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		claims, ok := token.Claims.(*Claims)
+		claims, ok := token.Claims.(*auth.Claims)
 		if !ok {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Claims extraction error"})
 			c.Abort()
@@ -49,6 +50,6 @@ func authMiddleware() gin.HandlerFunc {
 		}
 
 		// Set user information in the context for later use
-		c.Set("user", AuthenticatedUser{ID: claims.UserID, Username: claims.Username})
+		c.Set("user", auth.AuthenticatedUser{ID: claims.UserID, Username: claims.Username})
 	}
 }

@@ -1,4 +1,4 @@
-package auth_handlers
+package auth
 
 import (
 	"crypto/rand"
@@ -7,6 +7,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var SecretKey = generateRandomKey(10)
 
 type UserRegistration struct {
 	Username string `json:"username" binding:"required"`
@@ -42,8 +44,8 @@ func generateRandomKey(length int) []byte {
 	return key
 }
 
-// generateJwtToken generates a JWT token for the user
-func generateJwtToken(user_id int, username string) string {
+// GenerateJwtToken generates a JWT token for the user
+func GenerateJwtToken(user_id int, username string) string {
 	claims := &Claims{
 		UserID:   user_id,
 		Username: username,
@@ -53,7 +55,7 @@ func generateJwtToken(user_id int, username string) string {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := token.SignedString(secretKey)
+	signedToken, err := token.SignedString(SecretKey)
 	if err != nil {
 		panic(err)
 	}
@@ -61,8 +63,8 @@ func generateJwtToken(user_id int, username string) string {
 	return signedToken
 }
 
-// hashPassword hashes the plain text password
-func hashPassword(password string) (string, error) {
+// HashPassword hashes the plain text password
+func HashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
@@ -70,8 +72,8 @@ func hashPassword(password string) (string, error) {
 	return string(hashedPassword), nil
 }
 
-// checkPasswordAgainstHash checks the plain text password against a password hash
-func checkPasswordAgainstHash(password, password_hash string) error {
+// CheckPasswordAgainstHash checks the plain text password against a password hash
+func CheckPasswordAgainstHash(password, password_hash string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(password_hash), []byte(password))
 	if err != nil {
 		return err

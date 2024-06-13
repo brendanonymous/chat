@@ -1,6 +1,7 @@
 package auth_handlers
 
 import (
+	"chat/pkg/auth"
 	"chat/pkg/rest/models"
 	"net/http"
 
@@ -10,13 +11,13 @@ import (
 func (handler AuthHandler) Register(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	var user_registration UserRegistration
+	var user_registration auth.UserRegistration
 	if err := c.ShouldBindJSON(&user_registration); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	password_hash, err := hashPassword(user_registration.Password)
+	password_hash, err := auth.HashPassword(user_registration.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
 		return

@@ -1,6 +1,7 @@
 package auth_handlers
 
 import (
+	"chat/pkg/auth"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,7 @@ import (
 func (handler AuthHandler) Login(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	var user_login UserLogin
+	var user_login auth.UserLogin
 	if err := c.ShouldBindJSON(&user_login); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -25,14 +26,14 @@ func (handler AuthHandler) Login(c *gin.Context) {
 	}
 
 	// check password against stored hash
-	err = checkPasswordAgainstHash(user_login.Password, user.PasswordHash)
+	err = auth.CheckPasswordAgainstHash(user_login.Password, user.PasswordHash)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"Unauthorized": err.Error()})
 		return
 	}
 
 	// generate a JWT token
-	token := generateJwtToken(user.ID, user.Username)
+	token := auth.GenerateJwtToken(user.ID, user.Username)
 
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }

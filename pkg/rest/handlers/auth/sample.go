@@ -1,6 +1,6 @@
 package auth_handlers
 
-var secretKey = generateRandomKey(10)
+// var secretKey = generateRandomKey(10)
 
 // TODO: Protected endpoint example (DO NOT DELETE)
 // r.GET("/protected", authMiddleware(), func(c *gin.Context) {
